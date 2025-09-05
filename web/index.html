@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIBI Mental Fitness - Your Mental Wellness Companion</title>
+    <meta name="description" content="GENIBI Mental Fitness - AI-powered mental health support for Nigerian undergraduate students">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>GENIBI</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button class="btn btn-primary" onclick="openApp()">Get Started</button>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Your Mental Wellness Journey Starts Here
+                </h1>
+                <p class="hero-subtitle">
+                    GENIBI Mental Fitness provides AI-powered mental health support specifically designed for Nigerian undergraduate students. Track your mood, chat with our AI assistant, and access curated mental health resources.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="openApp()">
+                        <i class="fas fa-rocket"></i>
+                        Launch App
+                    </button>
+                    <button class="btn btn-secondary btn-large" onclick="scrollToFeatures()">
+                        <i class="fas fa-play"></i>
+                        Learn More
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Students Helped</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">AI Support</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="card-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Assistant</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="chat-bubble">
+                            <p>Hi! I'm here to support your mental wellness journey. How are you feeling today?</p>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type your message..." readonly>
+                            <button><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Comprehensive Mental Health Support</h2>
+                <p>Everything you need to maintain and improve your mental wellness</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Mental Health Assistant</h3>
+                    <p>Chat with our intelligent AI assistant trained specifically for mental health support. Get personalized advice and coping strategies 24/7.</p>
+                    <button class="feature-btn" onclick="openFeature('chat')">Try Now</button>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Mood Tracking</h3>
+                    <p>Track your daily mood and emotions with our intuitive mood tracker. Visualize patterns and identify triggers over time.</p>
+                    <button class="feature-btn" onclick="openFeature('mood')">Track Mood</button>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Resource Library</h3>
+                    <p>Access curated mental health resources, articles, and educational content tailored for Nigerian students.</p>
+                    <button class="feature-btn" onclick="openFeature('resources')">Explore</button>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Connect with other students on their mental wellness journey. Share experiences and support each other.</p>
+                    <button class="feature-btn" onclick="openFeature('community')">Join Community</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Interface -->
+    <div id="app-container" class="app-container hidden">
+        <div class="app-header">
+            <div class="app-nav">
+                <button class="app-nav-btn active" data-tab="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="app-nav-btn" data-tab="chat">
+                    <i class="fas fa-comments"></i>
+                    <span>AI Chat</span>
+                </button>
+                <button class="app-nav-btn" data-tab="mood">
+                    <i class="fas fa-heart"></i>
+                    <span>Mood</span>
+                </button>
+                <button class="app-nav-btn" data-tab="resources">
+                    <i class="fas fa-book"></i>
+                    <span>Resources</span>
+                </button>
+            </div>
+            <button class="close-app" onclick="closeApp()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="app-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="app-tab active">
+                <div class="dashboard-header">
+                    <h2>Welcome back! 👋</h2>
+                    <p>How are you feeling today?</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Today's Mood</h3>
+                        <div class="mood-selector">
+                            <button class="mood-btn" data-mood="great">😊</button>
+                            <button class="mood-btn" data-mood="good">🙂</button>
+                            <button class="mood-btn" data-mood="okay">😐</button>
+                            <button class="mood-btn" data-mood="sad">😔</button>
+                            <button class="mood-btn" data-mood="stressed">😰</button>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="action-btn" onclick="switchTab('chat')">
+                                <i class="fas fa-robot"></i>
+                                Chat with AI
+                            </button>
+                            <button class="action-btn" onclick="switchTab('mood')">
+                                <i class="fas fa-chart-line"></i>
+                                View Mood Trends
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Tab -->
+            <div id="chat" class="app-tab">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Hello! I'm your AI mental health assistant. I'm here to listen and support you. How are you feeling today?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="Type your message here..." />
+                        <button id="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mood Tab -->
+            <div id="mood" class="app-tab">
+                <div class="mood-tracker">
+                    <h2>Mood Tracker</h2>
+                    <div class="mood-chart">
+                        <canvas id="mood-chart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="mood-history">
+                        <h3>Recent Entries</h3>
+                        <div class="mood-entries" id="mood-entries">
+                            <!-- Mood entries will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resources Tab -->
+            <div id="resources" class="app-tab">
+                <div class="resources-container">
+                    <h2>Mental Health Resources</h2>
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <h3>Stress Management</h3>
+                            <p>Learn effective techniques to manage academic stress and pressure.</p>
+                            <button class="resource-btn">Read More</button>
+                        </div>
+                        <div class="resource-card">
+                            <h3>Anxiety Support</h3>
+                            <p>Understanding and coping with anxiety in university life.</p>
+                            <button class="resource-btn">Read More</button>
+                        </div>
+                        <div class="resource-card">
+                            <h3>Sleep Hygiene</h3>
+                            <p>Tips for better sleep and its impact on mental health.</p>
+                            <button class="resource-btn">Read More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

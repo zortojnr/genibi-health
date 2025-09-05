@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "GENIBI Mental Fitness",
+    "slug": "genibi-mental-fitness",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#4A90E2"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.genibi.mentalfitness"
+    },
+    "android": {
+      "package": "com.genibi.mentalfitness",
+      "permissions": [
+        "INTERNET"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#4A90E2"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "186bdc65-33fa-4a1d-a9fd-50424e860905"
+      }
+    }
+  }
+}

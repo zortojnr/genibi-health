@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIBI - Your Complete Health Companion</title>
+    <meta name="description" content="GENIBI - Professional mental health application with 24/7 helpline support">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Heart + ECG Logo Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><style>.heart{fill:%23009688;}.ecg{fill:%232196F3;stroke:%232196F3;stroke-width:2;}</style></defs><path class='heart' d='M50,85 C50,85 20,60 20,35 C20,25 30,15 40,15 C45,15 50,20 50,20 C50,20 55,15 60,15 C70,15 80,25 80,35 C80,60 50,85 50,85 Z'/><path class='ecg' d='M10,50 L35,50 L40,35 L45,65 L50,50 L55,40 L60,60 L65,50 L90,50'/></svg>">
+    
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-container">
+            <div class="health-icon-animation">
+                <div class="heart-ecg-logo large">
+                    <i class="fas fa-heart heart-icon"></i>
+                    <div class="ecg-line"></div>
+                </div>
+            </div>
+            <div class="loading-text">
+                <h2>🇳🇬 GENIBI</h2>
+                <p>Loading your complete health companion...</p>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container hidden">
+        <div class="auth-wrapper">
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form active">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="logo">
+                            <div class="heart-ecg-logo large">
+                                <i class="fas fa-heart heart-icon"></i>
+                                <div class="ecg-line"></div>
+                            </div>
+                            <span>GENIBI</span>
+                        </div>
+                        <h2>🇳🇬 Welcome Back</h2>
+                        <p>Sign in to access your health dashboard</p>
+                    </div>
+
+                    <form id="loginForm" class="form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+
+                    <div id="google-signin-button" class="google-signin-container">
+                        <!-- Google Sign-In button will be rendered here -->
+                    </div>
+
+                    <button class="btn btn-google btn-full" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" onclick="showSignupForm()">Sign up</a></p>
+                        <p><a href="#" onclick="startDemoMode()">Try Demo Version</a></p>
+                        <p>📞 24/7 Support: <a href="tel:+2348060270792">+234 806 027 0792</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signup-form" class="auth-form">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="logo">
+                            <div class="heart-ecg-logo large">
+                                <i class="fas fa-heart heart-icon"></i>
+                                <div class="ecg-line"></div>
+                            </div>
+                            <span>GENIBI</span>
+                        </div>
+                        <h2>🇳🇬 Join GENIBI</h2>
+                        <p>Create your health account</p>
+                    </div>
+
+                    <form id="signupForm" class="form">
+                        <div class="form-group">
+                            <label for="signupFirstName">First Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signupFirstName" placeholder="Enter your first name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupLastName">Last Name</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signupLastName" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signupPassword" placeholder="Create a password (min. 8 characters)" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-user-plus"></i>
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+
+                    <button class="btn btn-google btn-full" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </button>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()">Sign in</a></p>
+                        <p>📞 24/7 Support: <a href="tel:+2348060270792">+234 806 027 0792</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="heart-ecg-logo">
+                        <i class="fas fa-heart heart-icon"></i>
+                        <div class="ecg-line"></div>
+                    </div>
+                    <span>GENIBI</span>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">Welcome!</span>
+                    <button class="btn-logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <main class="dashboard">
+            <div class="dashboard-header">
+                <h1>Your Health Dashboard</h1>
+                <p>Monitor your health, book appointments, and access 24/7 support</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="health-card" onclick="openChatbot()">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>AI Health Assistant</h3>
+                        <p>Chat with our AI for health guidance and support</p>
+                        <button class="card-btn">Start Chat</button>
+                    </div>
+                </div>
+
+                <div class="health-card emergency-card">
+                    <div class="card-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Emergency Support</h3>
+                        <p>24/7 mental health crisis support</p>
+                        <a href="tel:+2348060270792" class="card-btn emergency-btn">
+                            Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openMedications()">
+                    <div class="card-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Medications</h3>
+                        <p>Manage your prescriptions and reminders</p>
+                        <button class="card-btn">Manage</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openVitalSigns()">
+                    <div class="card-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Vital Signs</h3>
+                        <p>Track your heart rate, blood pressure, and more</p>
+                        <button class="card-btn">View Details</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openAppointments()">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Appointments</h3>
+                        <p>Schedule and manage your medical appointments</p>
+                        <button class="card-btn">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openMoodTracker()">
+                    <div class="card-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Mood Tracker</h3>
+                        <p>Track your daily mood and emotional wellness</p>
+                        <button class="card-btn">Track Mood</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openHealthRecords()">
+                    <div class="card-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Health Records</h3>
+                        <p>Access your medical history and reports</p>
+                        <button class="card-btn">View Records</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openWellness()">
+                    <div class="card-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Wellness</h3>
+                        <p>Fitness tracking and wellness programs</p>
+                        <button class="card-btn">Explore</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Feature Modal -->
+    <div id="feature-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title">Feature</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbot-modal" class="modal-overlay hidden">
+        <div class="modal-container chatbot-container">
+            <div class="modal-header">
+                <h3>🤖 AI Health Assistant</h3>
+                <button class="modal-close" onclick="closeChatbot()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-content">
+                <div id="chatbot-messages" class="chatbot-messages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="chatbot-input-container">
+                    <input type="text" id="chatbot-input" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+                    <button onclick="sendChatMessage()" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="data-manager.js"></script>
+    <script src="js/api.js"></script>
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "demo-api-key",
+            authDomain: "genibi-health.firebaseapp.com",
+            projectId: "genibi-health",
+            storageBucket: "genibi-health.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        let auth = null;
+        if (typeof firebase !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            auth = firebase.auth();
+        }
+    </script>
+
+    <!-- Google Sign-In Configuration -->
+    <script>
+        // Google Sign-In configuration
+        window.onload = function() {
+            if (typeof google !== 'undefined') {
+                google.accounts.id.initialize({
+                    client_id: "your-google-client-id.apps.googleusercontent.com",
+                    callback: handleGoogleSignIn,
+                    auto_select: false,
+                    cancel_on_tap_outside: false
+                });
+
+                google.accounts.id.renderButton(
+                    document.getElementById("google-signin-button"),
+                    {
+                        theme: "outline",
+                        size: "large",
+                        width: "100%",
+                        text: "signin_with"
+                    }
+                );
+            }
+        };
+
+        function handleGoogleSignIn(response) {
+            // Decode the JWT token
+            const responsePayload = decodeJwtResponse(response.credential);
+
+            // Set user data
+            currentUser = {
+                firstName: responsePayload.given_name,
+                lastName: responsePayload.family_name,
+                email: responsePayload.email,
+                picture: responsePayload.picture,
+                isDemo: false,
+                loginMethod: 'google'
+            };
+
+            console.log('Google Sign-In successful:', currentUser);
+            showNotification(`Welcome ${currentUser.firstName}! Signed in with Google.`, 'success');
+            startMainApp();
+        }
+
+        function decodeJwtResponse(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+    </script>
+
+    <!-- Main App Script -->
+    <script>
+        // Global variables
+        let currentUser = null;
+        let isDemo = false;
+        let appData = {
+            vitals: [],
+            appointments: [],
+            medications: [],
+            moods: [],
+            chatHistory: [],
+            healthRecords: [],
+            wellnessData: []
+        };
+
+        // Initialize app
+        function initializeApp() {
+            console.log('🚀 Initializing GENIBI Health App...');
+
+            // Show loading screen
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('auth-container').classList.remove('hidden');
+            }, 2000);
+        }
+
+        // Authentication functions
+        function showLoginForm() {
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('signup-form').classList.remove('active');
+        }
+
+        function showSignupForm() {
+            document.getElementById('signup-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+        }
+
+        function startDemoMode() {
+            currentUser = {
+                firstName: 'Demo',
+                lastName: 'User',
+                email: 'demo@genibi.com',
+                isDemo: true,
+                loginMethod: 'demo'
+            };
+
+            console.log('🎯 Starting Demo Mode...');
+            showNotification('Welcome to GENIBI Demo Mode!', 'info');
+            startMainApp();
+        }
+
+        function signInWithGoogle() {
+            if (typeof google !== 'undefined') {
+                google.accounts.id.prompt();
+            } else {
+                // Fallback for when Google SDK is not loaded
+                currentUser = {
+                    firstName: 'Google',
+                    lastName: 'User',
+                    email: 'user@gmail.com',
+                    isDemo: false,
+                    loginMethod: 'google'
+                };
+                showNotification('Google Sign-In simulated (SDK not loaded)', 'info');
+                startMainApp();
+            }
+        }
+
+        function startMainApp() {
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+
+            // Update user name in header
+            const userName = currentUser.isDemo ? 'Demo User' : `${currentUser.firstName} ${currentUser.lastName}`;
+            document.getElementById('user-name').textContent = `Welcome, ${currentUser.firstName}!`;
+
+            console.log('✅ Main app started for:', userName);
+        }
+
+        // Password toggle function
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input.nextElementSibling;
+            const icon = toggle.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Form submission handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                if (email && password) {
+                    currentUser = {
+                        firstName: email.split('@')[0],
+                        lastName: '',
+                        email: email,
+                        isDemo: false,
+                        loginMethod: 'email'
+                    };
+
+                    showNotification('Login successful!', 'success');
+                    startMainApp();
+                } else {
+                    showNotification('Please fill in all fields', 'error');
+                }
+            });
+
+            // Signup form
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const firstName = document.getElementById('signupFirstName').value;
+                const lastName = document.getElementById('signupLastName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (password !== confirmPassword) {
+                    showNotification('Passwords do not match', 'error');
+                    return;
+                }
+
+                if (firstName && lastName && email && password) {
+                    currentUser = {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        isDemo: false,
+                        loginMethod: 'email'
+                    };
+
+                    showNotification('Account created successfully!', 'success');
+                    startMainApp();
+                } else {
+                    showNotification('Please fill in all fields', 'error');
+                }
+            });
+        });
+
+        // Dashboard section functions
+        function openChatbot() {
+            console.log('🤖 Opening AI Health Assistant');
+            document.getElementById('chatbot-modal').classList.remove('hidden');
+
+            // Add welcome message if no chat history
+            const messages = document.getElementById('chatbot-messages');
+            if (messages.children.length === 0) {
+                const greeting = currentUser.isDemo ?
+                    "Hello! I'm your AI Health Assistant. I'm here to help with health guidance and support. How can I assist you today?" :
+                    `Hello ${currentUser.firstName}! I'm your AI Health Assistant. How can I help you today?`;
+                addChatMessage('bot', greeting);
+            }
+
+            // Focus on input
+            setTimeout(() => {
+                document.getElementById('chatbot-input').focus();
+            }, 100);
+        }
+
+        function closeChatbot() {
+            document.getElementById('chatbot-modal').classList.add('hidden');
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addChatMessage('user', message);
+            input.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addChatMessage('bot', response);
+            }, 1000);
+        }
+
+        function addChatMessage(type, message) {
+            const container = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${message}</p>
+                    <span class="message-time">${new Date().toLocaleTimeString()}</span>
+                </div>
+            `;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            const userName = currentUser ? currentUser.firstName : 'there';
+
+            if (message.includes('stress') || message.includes('anxiety') || message.includes('worried')) {
+                return `${userName}, I understand you're feeling stressed. Try taking 5 deep breaths. Would you like me to guide you through a breathing exercise? Remember, our 24/7 helpline is available at +234 806 027 0792.`;
+            }
+
+            if (message.includes('appointment') || message.includes('doctor') || message.includes('schedule')) {
+                return `To book an appointment, ${userName}, you can call our helpline at +234 806 027 0792 or use the Appointments feature in your dashboard.`;
+            }
+
+            if (message.includes('emergency') || message.includes('crisis') || message.includes('help') || message.includes('urgent')) {
+                return `${userName}, if this is a medical emergency, please call emergency services immediately or contact our 24/7 helpline at +234 806 027 0792. I'm here to support you.`;
+            }
+
+            if (message.includes('medication') || message.includes('pills') || message.includes('prescription')) {
+                return `For medication questions, ${userName}, always consult your healthcare provider. You can track your medications using the Medications feature in your dashboard.`;
+            }
+
+            if (message.includes('mood') || message.includes('feeling') || message.includes('sad') || message.includes('happy')) {
+                return `${userName}, tracking your mood is important for mental health. Use our Mood Tracker to log how you're feeling today. Your emotional wellness matters.`;
+            }
+
+            if (message.includes('vital') || message.includes('heart') || message.includes('pressure') || message.includes('health')) {
+                return `${userName}, monitoring your vital signs is crucial for health. Use our Vital Signs tracker to record your heart rate, blood pressure, and temperature.`;
+            }
+
+            return `Thank you for your message, ${userName}. I'm here to help with your health and wellness. You can ask me about stress management, appointments, medications, mood tracking, or any health concerns. How can I assist you today?`;
+        }
+
+        function openMedications() {
+            const medicationsContent = currentUser.isDemo ? `
+                <div class="feature-content">
+                    <h4>Your Medications</h4>
+                    <div class="medication-card">
+                        <div class="med-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="med-info">
+                            <h5>Demo Medication</h5>
+                            <p>Sample dosage - Demo Mode</p>
+                            <span class="next-dose">Demo: Next dose timing</span>
+                        </div>
+                        <div class="med-actions">
+                            <button class="btn-small btn-primary" onclick="takeMedication()">
+                                <i class="fas fa-check"></i> Mark Taken
+                            </button>
+                        </div>
+                    </div>
+                    <p class="demo-notice">📝 Demo Mode: Real medication data will appear when you sign in</p>
+                    <button class="btn btn-primary" onclick="addMedication()">
+                        <i class="fas fa-plus"></i> Add Medication
+                    </button>
+                </div>
+            ` : `
+                <div class="feature-content">
+                    <h4>Your Medications</h4>
+                    <div class="medication-card">
+                        <div class="med-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="med-info">
+                            <h5>Vitamin D3</h5>
+                            <p>1000 IU daily</p>
+                            <span class="next-dose">Next: 8:00 AM tomorrow</span>
+                        </div>
+                        <div class="med-actions">
+                            <button class="btn-small btn-primary" onclick="takeMedication()">
+                                <i class="fas fa-check"></i> Take Now
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addMedication()">
+                        <i class="fas fa-plus"></i> Add Medication
+                    </button>
+                </div>
+            `;
+
+            openFeatureModal('💊 Medications', medicationsContent);
+        }
+
+        function openVitalSigns() {
+            const vitalsContent = currentUser.isDemo ? `
+                <div class="feature-content">
+                    <h4>Your Health Metrics</h4>
+                    <div class="vitals-grid">
+                        <div class="vital-card">
+                            <h5>Heart Rate</h5>
+                            <div class="vital-value">-- <span>BPM</span></div>
+                            <div class="vital-status demo">Demo Mode</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Blood Pressure</h5>
+                            <div class="vital-value">--/-- <span>mmHg</span></div>
+                            <div class="vital-status demo">Demo Mode</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Temperature</h5>
+                            <div class="vital-value">-- <span>°F</span></div>
+                            <div class="vital-status demo">Demo Mode</div>
+                        </div>
+                    </div>
+                    <p class="demo-notice">📊 Demo Mode: Real vital signs will be tracked when you sign in</p>
+                    <button class="btn btn-primary" onclick="recordVitals()">
+                        <i class="fas fa-plus"></i> Record New Reading
+                    </button>
+                </div>
+            ` : `
+                <div class="feature-content">
+                    <h4>Your Health Metrics</h4>
+                    <div class="vitals-grid">
+                        <div class="vital-card">
+                            <h5>Heart Rate</h5>
+                            <div class="vital-value">72 <span>BPM</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Blood Pressure</h5>
+                            <div class="vital-value">120/80 <span>mmHg</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Temperature</h5>
+                            <div class="vital-value">98.6 <span>°F</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="recordVitals()">
+                        <i class="fas fa-plus"></i> Record New Reading
+                    </button>
+                </div>
+            `;
+
+            openFeatureModal('💓 Vital Signs', vitalsContent);
+        }
+
+        function openAppointments() {
+            const appointmentsContent = currentUser.isDemo ? `
+                <div class="feature-content">
+                    <h4>Your Appointments</h4>
+                    <div class="appointment-card demo">
+                        <div class="appointment-date">
+                            <span class="day">--</span>
+                            <span class="month">Demo</span>
+                        </div>
+                        <div class="appointment-info">
+                            <h5>Demo Doctor</h5>
+                            <p>Demo Consultation</p>
+                            <span class="time">Demo Mode</span>
+                        </div>
+                        <div class="appointment-status">
+                            <span class="status demo">Demo</span>
+                        </div>
+                    </div>
+                    <p class="demo-notice">📅 Demo Mode: Real appointments will appear when you sign in</p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="bookAppointment()">
+                            <i class="fas fa-calendar-plus"></i> Book New Appointment
+                        </button>
+                        <a href="tel:+2348060270792" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i> Call to Schedule
+                        </a>
+                    </div>
+                </div>
+            ` : `
+                <div class="feature-content">
+                    <h4>Your Appointments</h4>
+                    <div class="appointment-card">
+                        <div class="appointment-date">
+                            <span class="day">15</span>
+                            <span class="month">Dec</span>
+                        </div>
+                        <div class="appointment-info">
+                            <h5>Dr. Smith</h5>
+                            <p>General Consultation</p>
+                            <span class="time">2:00 PM</span>
+                        </div>
+                        <div class="appointment-status">
+                            <span class="status confirmed">Confirmed</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="bookAppointment()">
+                            <i class="fas fa-calendar-plus"></i> Book New Appointment
+                        </button>
+                        <a href="tel:+2348060270792" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i> Call to Schedule
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            openFeatureModal('📅 Appointments', appointmentsContent);
+        }
+
+        function openMoodTracker() {
+            openFeatureModal('😊 Mood Tracker', `
+                <div class="feature-content">
+                    <h4>How are you feeling today?</h4>
+                    <div class="mood-options">
+                        <button class="mood-btn" onclick="logMood('excellent', '😊')">
+                            <span class="mood-emoji">😊</span>
+                            <span class="mood-label">Excellent</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('good', '🙂')">
+                            <span class="mood-emoji">🙂</span>
+                            <span class="mood-label">Good</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('okay', '😐')">
+                            <span class="mood-emoji">😐</span>
+                            <span class="mood-label">Okay</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('low', '😔')">
+                            <span class="mood-emoji">😔</span>
+                            <span class="mood-label">Low</span>
+                        </button>
+                    </div>
+                    <div class="recent-moods">
+                        <h5>Recent Moods</h5>
+                        <div class="mood-entry">
+                            <span class="date">Today</span>
+                            <span class="mood">😊 Excellent</span>
+                        </div>
+                        <div class="mood-entry">
+                            <span class="date">Yesterday</span>
+                            <span class="mood">🙂 Good</span>
+                        </div>
+                    </div>
+                    ${currentUser.isDemo ? '<p class="demo-notice">📊 Demo Mode: Real mood data will be saved when you sign in</p>' : ''}
+                </div>
+            `);
+        }
+
+        function openHealthRecords() {
+            const recordsContent = currentUser.isDemo ? `
+                <div class="feature-content">
+                    <h4>Your Health Records</h4>
+                    <div class="record-card demo">
+                        <div class="record-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="record-info">
+                            <h5>Demo Medical Report</h5>
+                            <p>Demo Date - Demo Doctor</p>
+                            <span class="record-type">Demo Mode</span>
+                        </div>
+                        <div class="record-actions">
+                            <button class="btn-small btn-primary" onclick="viewRecord()">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                    <p class="demo-notice">📋 Demo Mode: Real health records will appear when you sign in</p>
+                    <button class="btn btn-primary" onclick="uploadRecord()">
+                        <i class="fas fa-upload"></i> Upload Record
+                    </button>
+                </div>
+            ` : `
+                <div class="feature-content">
+                    <h4>Your Health Records</h4>
+                    <div class="record-card">
+                        <div class="record-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div class="record-info">
+                            <h5>Blood Test Results</h5>
+                            <p>Dec 10, 2024 - Dr. Johnson</p>
+                            <span class="record-type">Lab Report</span>
+                        </div>
+                        <div class="record-actions">
+                            <button class="btn-small btn-primary" onclick="viewRecord()">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="uploadRecord()">
+                        <i class="fas fa-upload"></i> Upload Record
+                    </button>
+                </div>
+            `;
+
+            openFeatureModal('📋 Health Records', recordsContent);
+        }
+
+        function openWellness() {
+            openFeatureModal('🌿 Wellness', `
+                <div class="feature-content">
+                    <h4>Your Wellness Journey</h4>
+                    <div class="wellness-grid">
+                        <div class="wellness-card">
+                            <div class="wellness-icon">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <div class="wellness-info">
+                                <h5>Daily Steps</h5>
+                                <div class="wellness-value">8,542</div>
+                                <div class="wellness-goal">Goal: 10,000</div>
+                            </div>
+                        </div>
+                        <div class="wellness-card">
+                            <div class="wellness-icon">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <div class="wellness-info">
+                                <h5>Sleep</h5>
+                                <div class="wellness-value">7.5 hrs</div>
+                                <div class="wellness-goal">Goal: 8 hrs</div>
+                            </div>
+                        </div>
+                        <div class="wellness-card">
+                            <div class="wellness-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="wellness-info">
+                                <h5>Water Intake</h5>
+                                <div class="wellness-value">6 glasses</div>
+                                <div class="wellness-goal">Goal: 8 glasses</div>
+                            </div>
+                        </div>
+                    </div>
+                    ${currentUser.isDemo ? '<p class="demo-notice">🌿 Demo Mode: Real wellness data will be tracked when you sign in</p>' : ''}
+                    <button class="btn btn-primary" onclick="updateWellness()">
+                        <i class="fas fa-plus"></i> Log Activity
+                    </button>
+                </div>
+            `);
+        }
+
+        function openFeatureModal(title, content) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('feature-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('feature-modal').classList.add('hidden');
+        }
+
+        // Action functions
+        function recordVitals() {
+            showNotification('✅ Vital signs recorded successfully!', 'success');
+        }
+
+        function bookAppointment() {
+            showNotification('📅 Appointment booking opened! Call +234 806 027 0792 to schedule.', 'info');
+        }
+
+        function addMedication() {
+            const medication = prompt('Enter medication name:');
+            if (medication) {
+                showNotification(`💊 ${medication} added to your medication list!`, 'success');
+            }
+        }
+
+        function takeMedication() {
+            showNotification('✅ Medication marked as taken!', 'success');
+        }
+
+        function logMood(mood, emoji) {
+            showNotification(`${emoji} Mood logged: ${mood}`, 'success');
+        }
+
+        function viewRecord() {
+            showNotification('📋 Opening health record...', 'info');
+        }
+
+        function uploadRecord() {
+            showNotification('📤 Record upload feature coming soon!', 'info');
+        }
+
+        function updateWellness() {
+            showNotification('🌿 Wellness activity logged!', 'success');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                currentUser = null;
+                isDemo = false;
+                location.reload();
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.add('hidden');
+            }
+        });
+
+        // Initialize app when page loads
+        window.addEventListener('load', initializeApp);
+
+        console.log('🚀 GENIBI Health App - Complete Improved Version Loaded');
+    </script>
+</body>
+</html>

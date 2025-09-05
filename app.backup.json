@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "GENIBI Mental Fitness",
+    "slug": "genibi-mental-fitness",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android", "web"],
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#4A90E2"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.genibi.mentalfitness",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.genibi.mentalfitness",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#4A90E2"
+      }
+    },
+    "plugins": [
+      "expo-notifications",
+      "@react-native-google-signin/google-signin"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "186bdc65-33fa-4a1d-a9fd-50424e860905"
+      }
+    }
+  }
+}

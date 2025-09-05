@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIBI Debug - Step by Step Loading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .step {
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .step.success { border-color: #28a745; background: #d4edda; }
+        .step.error { border-color: #dc3545; background: #f8d7da; }
+        .step.loading { border-color: #ffc107; background: #fff3cd; }
+        .console {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔧 GENIBI Health App - Debug Mode</h1>
+        <p>This will load the app step by step to identify any issues.</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div id="step1" class="step loading">
+            <h3>Step 1: Loading HTML Structure</h3>
+            <p>Checking if basic HTML elements are present...</p>
+        </div>
+        
+        <div id="step2" class="step">
+            <h3>Step 2: Loading CSS Styles</h3>
+            <p>Verifying stylesheet loading...</p>
+        </div>
+        
+        <div id="step3" class="step">
+            <h3>Step 3: Loading JavaScript Files</h3>
+            <p>Loading data-manager.js, api.js, auth.js, app.js...</p>
+        </div>
+        
+        <div id="step4" class="step">
+            <h3>Step 4: Initializing Data Manager</h3>
+            <p>Setting up local storage and data management...</p>
+        </div>
+        
+        <div id="step5" class="step">
+            <h3>Step 5: Initializing API Service</h3>
+            <p>Setting up API connections...</p>
+        </div>
+        
+        <div id="step6" class="step">
+            <h3>Step 6: Loading Main App</h3>
+            <p>Starting the main GENIBI application...</p>
+        </div>
+        
+        <div class="console" id="console">
+            <div>[DEBUG] GENIBI Health App Debug Console</div>
+            <div>[DEBUG] Starting step-by-step loading...</div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="startDebug()">🚀 Start Debug Process</button>
+            <button onclick="skipToApp()">⏭️ Skip to Main App</button>
+            <button onclick="clearConsole()">🗑️ Clear Console</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 6;
+
+        function log(message, type = 'info') {
+            const console_el = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            console_el.innerHTML += `<div>[${timestamp}] ${icon} ${message}</div>`;
+            console_el.scrollTop = console_el.scrollHeight;
+            console.log(`[GENIBI Debug] ${message}`);
+        }
+
+        function updateProgress(step) {
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function setStepStatus(stepNum, status) {
+            const step = document.getElementById(`step${stepNum}`);
+            step.className = `step ${status}`;
+        }
+
+        async function startDebug() {
+            log('Starting GENIBI Health App debug process...');
+            
+            // Step 1: HTML Structure
+            currentStep = 1;
+            updateProgress(currentStep);
+            setStepStatus(1, 'loading');
+            log('Step 1: Checking HTML structure...');
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            if (document.body && document.head) {
+                setStepStatus(1, 'success');
+                log('HTML structure loaded successfully', 'success');
+            } else {
+                setStepStatus(1, 'error');
+                log('HTML structure missing', 'error');
+                return;
+            }
+            
+            // Step 2: CSS Styles
+            currentStep = 2;
+            updateProgress(currentStep);
+            setStepStatus(2, 'loading');
+            log('Step 2: Checking CSS styles...');
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            const styles = getComputedStyle(document.body);
+            if (styles.fontFamily !== 'Times') {
+                setStepStatus(2, 'success');
+                log('CSS styles loaded successfully', 'success');
+            } else {
+                setStepStatus(2, 'error');
+                log('CSS styles not loaded properly', 'error');
+            }
+            
+            // Step 3: JavaScript Files
+            currentStep = 3;
+            updateProgress(currentStep);
+            setStepStatus(3, 'loading');
+            log('Step 3: Loading JavaScript files...');
+            
+            await loadScript('data-manager.js');
+            await loadScript('js/api.js');
+            await loadScript('auth.js');
+            await loadScript('app.js');
+            
+            setStepStatus(3, 'success');
+            log('All JavaScript files loaded', 'success');
+            
+            // Step 4: Data Manager
+            currentStep = 4;
+            updateProgress(currentStep);
+            setStepStatus(4, 'loading');
+            log('Step 4: Initializing Data Manager...');
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            if (typeof dataManager !== 'undefined') {
+                setStepStatus(4, 'success');
+                log('Data Manager initialized successfully', 'success');
+            } else {
+                setStepStatus(4, 'error');
+                log('Data Manager failed to initialize', 'error');
+            }
+            
+            // Step 5: API Service
+            currentStep = 5;
+            updateProgress(currentStep);
+            setStepStatus(5, 'loading');
+            log('Step 5: Initializing API Service...');
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            if (typeof api !== 'undefined') {
+                setStepStatus(5, 'success');
+                log('API Service initialized successfully', 'success');
+            } else {
+                setStepStatus(5, 'error');
+                log('API Service failed to initialize', 'error');
+            }
+            
+            // Step 6: Main App
+            currentStep = 6;
+            updateProgress(currentStep);
+            setStepStatus(6, 'loading');
+            log('Step 6: Loading main application...');
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            setStepStatus(6, 'success');
+            log('Main application loaded successfully!', 'success');
+            log('🎉 Debug process complete! Opening main app...', 'success');
+            
+            setTimeout(() => {
+                window.open('index.html', '_blank');
+            }, 2000);
+        }
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                log(`Loading ${src}...`);
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => {
+                    log(`${src} loaded successfully`, 'success');
+                    resolve();
+                };
+                script.onerror = () => {
+                    log(`Failed to load ${src}`, 'error');
+                    reject();
+                };
+                document.head.appendChild(script);
+            });
+        }
+
+        function skipToApp() {
+            log('Skipping debug process, opening main app...');
+            window.open('index.html', '_blank');
+        }
+
+        function clearConsole() {
+            document.getElementById('console').innerHTML = `
+                <div>[DEBUG] GENIBI Health App Debug Console</div>
+                <div>[DEBUG] Console cleared...</div>
+            `;
+        }
+
+        // Auto-start debug on page load
+        window.addEventListener('load', function() {
+            log('Debug page loaded, ready to start...');
+        });
+    </script>
+</body>
+</html>

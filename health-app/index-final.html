@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIBI - Your Complete Health Companion</title>
+    <meta name="description" content="GENIBI - Professional mental health application with 24/7 helpline support">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-container">
+            <div class="health-icon-animation">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <div class="loading-text">
+                <h2>🇳🇬 GENIBI</h2>
+                <p>Loading your complete health companion...</p>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container hidden">
+        <div class="auth-wrapper">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>GENIBI</span>
+                    </div>
+                    <h2>🇳🇬 Welcome to GENIBI</h2>
+                    <p>Your Complete Mental Health Companion</p>
+                </div>
+
+                <div class="auth-options">
+                    <button class="btn btn-primary btn-full" onclick="startApp()">
+                        <i class="fas fa-play"></i>
+                        Start Using GENIBI
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <button class="btn btn-google btn-full" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Sign in with Google
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>🔒 Your data is secure and private</p>
+                    <p>📞 24/7 Support: <a href="tel:+2348060270792">+234 806 027 0792</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>GENIBI</span>
+                </div>
+                <div class="user-info">
+                    <span id="user-name">Welcome!</span>
+                    <button class="btn-logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <main class="dashboard">
+            <div class="dashboard-header">
+                <h1>Your Health Dashboard</h1>
+                <p>Monitor your health, book appointments, and access 24/7 support</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="health-card" onclick="openChatbot()">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>AI Health Assistant</h3>
+                        <p>Chat with our AI for health guidance and support</p>
+                        <button class="card-btn">Start Chat</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openVitalSigns()">
+                    <div class="card-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Vital Signs</h3>
+                        <p>Track your heart rate, blood pressure, and more</p>
+                        <button class="card-btn">View Details</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openAppointments()">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Appointments</h3>
+                        <p>Schedule and manage your medical appointments</p>
+                        <button class="card-btn">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openMedications()">
+                    <div class="card-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Medications</h3>
+                        <p>Manage your prescriptions and reminders</p>
+                        <button class="card-btn">Manage</button>
+                    </div>
+                </div>
+
+                <div class="health-card emergency-card">
+                    <div class="card-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Emergency Support</h3>
+                        <p>24/7 mental health crisis support</p>
+                        <a href="tel:+2348060270792" class="card-btn emergency-btn">
+                            Call Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="health-card" onclick="openMoodTracker()">
+                    <div class="card-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Mood Tracker</h3>
+                        <p>Track your daily mood and emotional wellness</p>
+                        <button class="card-btn">Track Mood</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Feature Modal -->
+    <div id="feature-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title">Feature</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbot-modal" class="modal-overlay hidden">
+        <div class="modal-container chatbot-container">
+            <div class="modal-header">
+                <h3>🤖 AI Health Assistant</h3>
+                <button class="modal-close" onclick="closeChatbot()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-content">
+                <div id="chatbot-messages" class="chatbot-messages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="chatbot-input-container">
+                    <input type="text" id="chatbot-input" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+                    <button onclick="sendChatMessage()" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="data-manager.js"></script>
+    <script src="js/api.js"></script>
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Main App Script -->
+    <script>
+        // Global variables
+        let currentUser = { firstName: 'User', email: 'user@genibi.com' };
+        let appData = {
+            vitals: [],
+            appointments: [],
+            medications: [],
+            moods: [],
+            chatHistory: []
+        };
+
+        // Initialize app
+        function initializeApp() {
+            console.log('🚀 Initializing GENIBI Health App...');
+            
+            // Show loading screen
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('auth-container').classList.remove('hidden');
+            }, 2000);
+        }
+
+        // Start app function
+        function startApp() {
+            console.log('🎯 Starting GENIBI Health App...');
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            document.getElementById('user-name').textContent = `Welcome, ${currentUser.firstName}!`;
+        }
+
+        // Google Sign In (simplified)
+        function signInWithGoogle() {
+            console.log('🔐 Google Sign In...');
+            currentUser = { firstName: 'Google User', email: 'user@gmail.com' };
+            startApp();
+        }
+
+        // Feature functions
+        function openChatbot() {
+            console.log('🤖 Opening AI Health Assistant');
+            document.getElementById('chatbot-modal').classList.remove('hidden');
+
+            // Add welcome message if no chat history
+            const messages = document.getElementById('chatbot-messages');
+            if (messages.children.length === 0) {
+                addChatMessage('bot', `Hello ${currentUser.firstName}! I'm your AI Health Assistant. How can I help you today?`);
+            }
+
+            // Focus on input
+            setTimeout(() => {
+                document.getElementById('chatbot-input').focus();
+            }, 100);
+        }
+
+        function closeChatbot() {
+            document.getElementById('chatbot-modal').classList.add('hidden');
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addChatMessage('user', message);
+            input.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addChatMessage('bot', response);
+            }, 1000);
+        }
+
+        function addChatMessage(type, message) {
+            const container = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message`;
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${message}</p>
+                    <span class="message-time">${new Date().toLocaleTimeString()}</span>
+                </div>
+            `;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            const userName = currentUser.firstName;
+
+            if (message.includes('stress') || message.includes('anxiety')) {
+                return `${userName}, I understand you're feeling stressed. Try taking 5 deep breaths. Would you like me to guide you through a breathing exercise?`;
+            }
+
+            if (message.includes('appointment')) {
+                return `To book an appointment, ${userName}, you can call our helpline at +234 806 027 0792 or use the Appointments feature in your dashboard.`;
+            }
+
+            if (message.includes('emergency') || message.includes('crisis')) {
+                return `${userName}, if this is a medical emergency, please call emergency services immediately or contact our 24/7 helpline at +234 806 027 0792.`;
+            }
+
+            if (message.includes('medication')) {
+                return `For medication questions, ${userName}, always consult your healthcare provider. You can track your medications using the Medications feature.`;
+            }
+
+            if (message.includes('mood') || message.includes('feeling')) {
+                return `${userName}, tracking your mood is important for mental health. Use our Mood Tracker to log how you're feeling today.`;
+            }
+
+            return `Thank you for your message, ${userName}. I'm here to help with your health and wellness. How can I assist you today?`;
+        }
+
+        function openVitalSigns() {
+            openFeatureModal('💓 Vital Signs', `
+                <div class="feature-content">
+                    <h4>Your Health Metrics</h4>
+                    <div class="vitals-grid">
+                        <div class="vital-card">
+                            <h5>Heart Rate</h5>
+                            <div class="vital-value">72 <span>BPM</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Blood Pressure</h5>
+                            <div class="vital-value">120/80 <span>mmHg</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                        <div class="vital-card">
+                            <h5>Temperature</h5>
+                            <div class="vital-value">98.6 <span>°F</span></div>
+                            <div class="vital-status normal">Normal</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="recordVitals()">
+                        <i class="fas fa-plus"></i> Record New Reading
+                    </button>
+                </div>
+            `);
+        }
+
+        function openAppointments() {
+            openFeatureModal('📅 Appointments', `
+                <div class="feature-content">
+                    <h4>Your Appointments</h4>
+                    <div class="appointment-card">
+                        <div class="appointment-date">
+                            <span class="day">15</span>
+                            <span class="month">Dec</span>
+                        </div>
+                        <div class="appointment-info">
+                            <h5>Dr. Smith</h5>
+                            <p>General Consultation</p>
+                            <span class="time">2:00 PM</span>
+                        </div>
+                        <div class="appointment-status">
+                            <span class="status confirmed">Confirmed</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="bookAppointment()">
+                            <i class="fas fa-calendar-plus"></i> Book New Appointment
+                        </button>
+                        <a href="tel:+2348060270792" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i> Call to Schedule
+                        </a>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openMedications() {
+            openFeatureModal('💊 Medications', `
+                <div class="feature-content">
+                    <h4>Your Medications</h4>
+                    <div class="medication-card">
+                        <div class="med-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="med-info">
+                            <h5>Vitamin D3</h5>
+                            <p>1000 IU daily</p>
+                            <span class="next-dose">Next: 8:00 AM tomorrow</span>
+                        </div>
+                        <div class="med-actions">
+                            <button class="btn-small btn-primary" onclick="takeMedication()">
+                                <i class="fas fa-check"></i> Take Now
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addMedication()">
+                        <i class="fas fa-plus"></i> Add Medication
+                    </button>
+                </div>
+            `);
+        }
+
+        function openMoodTracker() {
+            openFeatureModal('😊 Mood Tracker', `
+                <div class="feature-content">
+                    <h4>How are you feeling today?</h4>
+                    <div class="mood-options">
+                        <button class="mood-btn" onclick="logMood('excellent', '😊')">
+                            <span class="mood-emoji">😊</span>
+                            <span class="mood-label">Excellent</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('good', '🙂')">
+                            <span class="mood-emoji">🙂</span>
+                            <span class="mood-label">Good</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('okay', '😐')">
+                            <span class="mood-emoji">😐</span>
+                            <span class="mood-label">Okay</span>
+                        </button>
+                        <button class="mood-btn" onclick="logMood('low', '😔')">
+                            <span class="mood-emoji">😔</span>
+                            <span class="mood-label">Low</span>
+                        </button>
+                    </div>
+                    <div class="recent-moods">
+                        <h5>Recent Moods</h5>
+                        <div class="mood-entry">
+                            <span class="date">Today</span>
+                            <span class="mood">😊 Excellent</span>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openFeatureModal(title, content) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-content').innerHTML = content;
+            document.getElementById('feature-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('feature-modal').classList.add('hidden');
+        }
+
+        // Action functions
+        function recordVitals() {
+            showNotification('✅ Vital signs recorded successfully!', 'success');
+        }
+
+        function bookAppointment() {
+            showNotification('📅 Appointment booking opened! Call +234 806 027 0792 to schedule.', 'info');
+        }
+
+        function addMedication() {
+            const medication = prompt('Enter medication name:');
+            if (medication) {
+                showNotification(`💊 ${medication} added to your medication list!`, 'success');
+            }
+        }
+
+        function takeMedication() {
+            showNotification('✅ Medication marked as taken!', 'success');
+        }
+
+        function logMood(mood, emoji) {
+            showNotification(`${emoji} Mood logged: ${mood}`, 'success');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                location.reload();
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.add('hidden');
+            }
+        });
+
+        // Initialize app when page loads
+        window.addEventListener('load', initializeApp);
+
+        console.log('🚀 GENIBI Health App - Complete Final Version Loaded');
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "genibi-health-app-deploy",
+  "version": "1.0.0",
+  "description": "Genibi Health App Deployment Package",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

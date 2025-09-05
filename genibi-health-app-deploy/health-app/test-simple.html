@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIBI Health App - Simple Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+            background: #f8f9fa;
+        }
+        .success { border-color: #28a745; background: #d4edda; }
+        .error { border-color: #dc3545; background: #f8d7da; }
+        .warning { border-color: #ffc107; background: #fff3cd; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        #console-output {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 GENIBI Health App - Simple Test</h1>
+        
+        <div class="test-item">
+            <h3>Step 1: Basic HTML Loading</h3>
+            <p id="html-test">✅ HTML loaded successfully</p>
+        </div>
+        
+        <div class="test-item" id="script-test">
+            <h3>Step 2: Script Loading Test</h3>
+            <p>Testing if JavaScript files load properly...</p>
+            <button onclick="testScripts()">Test Scripts</button>
+        </div>
+        
+        <div class="test-item">
+            <h3>Step 3: Function Test</h3>
+            <button onclick="testBasicFunction()">Test Basic Function</button>
+            <button onclick="testDataManager()">Test Data Manager</button>
+            <button onclick="testAPI()">Test API</button>
+        </div>
+        
+        <div class="test-item">
+            <h3>Step 4: Open Main App</h3>
+            <button onclick="openMainApp()">Open Full App</button>
+        </div>
+        
+        <div id="console-output">
+            <div>🚀 GENIBI Health App Test Console</div>
+            <div>Ready to test...</div>
+        </div>
+    </div>
+
+    <!-- Load the same scripts as main app -->
+    <script src="data-manager.js"></script>
+    <script src="js/api.js"></script>
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        // Console output function
+        function logToConsole(message, type = 'info') {
+            const console_output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+            console_output.innerHTML += `<div>[${timestamp}] ${icon} ${message}</div>`;
+            console_output.scrollTop = console_output.scrollHeight;
+            
+            // Also log to browser console
+            console.log(`[GENIBI Test] ${message}`);
+        }
+
+        // Test if scripts loaded
+        function testScripts() {
+            logToConsole('Testing script loading...');
+            
+            const tests = [
+                { name: 'DataManager', check: () => typeof dataManager !== 'undefined' },
+                { name: 'API Service', check: () => typeof api !== 'undefined' },
+                { name: 'Firebase', check: () => typeof firebase !== 'undefined' },
+                { name: 'Auth Functions', check: () => typeof signInWithGoogle === 'function' },
+                { name: 'App Functions', check: () => typeof openChatbot === 'function' }
+            ];
+            
+            let allPassed = true;
+            tests.forEach(test => {
+                try {
+                    const result = test.check();
+                    if (result) {
+                        logToConsole(`${test.name}: LOADED`, 'success');
+                    } else {
+                        logToConsole(`${test.name}: NOT LOADED`, 'error');
+                        allPassed = false;
+                    }
+                } catch (error) {
+                    logToConsole(`${test.name}: ERROR - ${error.message}`, 'error');
+                    allPassed = false;
+                }
+            });
+            
+            if (allPassed) {
+                document.getElementById('script-test').className = 'test-item success';
+                logToConsole('All scripts loaded successfully!', 'success');
+            } else {
+                document.getElementById('script-test').className = 'test-item error';
+                logToConsole('Some scripts failed to load', 'error');
+            }
+        }
+
+        // Test basic function
+        function testBasicFunction() {
+            logToConsole('Testing basic JavaScript function...');
+            try {
+                const testVar = 'Hello GENIBI!';
+                logToConsole(`Basic function test: ${testVar}`, 'success');
+                alert('Basic function working! ✅');
+            } catch (error) {
+                logToConsole(`Basic function error: ${error.message}`, 'error');
+            }
+        }
+
+        // Test data manager
+        function testDataManager() {
+            logToConsole('Testing Data Manager...');
+            try {
+                if (typeof dataManager === 'undefined') {
+                    logToConsole('DataManager not loaded', 'error');
+                    return;
+                }
+                
+                // Test basic operations
+                dataManager.setData('test_key', { test: 'data' });
+                const retrieved = dataManager.getData('test_key');
+                
+                if (retrieved && retrieved.test === 'data') {
+                    logToConsole('DataManager working correctly!', 'success');
+                    alert('Data Manager working! ✅');
+                } else {
+                    logToConsole('DataManager test failed', 'error');
+                }
+            } catch (error) {
+                logToConsole(`DataManager error: ${error.message}`, 'error');
+            }
+        }
+
+        // Test API
+        function testAPI() {
+            logToConsole('Testing API Service...');
+            try {
+                if (typeof api === 'undefined') {
+                    logToConsole('API Service not loaded', 'error');
+                    return;
+                }
+                
+                logToConsole(`API Base URL: ${api.baseURL}`, 'info');
+                logToConsole(`Offline Mode: ${api.isOfflineMode}`, 'info');
+                logToConsole('API Service loaded correctly!', 'success');
+                alert('API Service working! ✅');
+            } catch (error) {
+                logToConsole(`API error: ${error.message}`, 'error');
+            }
+        }
+
+        // Open main app
+        function openMainApp() {
+            logToConsole('Opening main GENIBI Health App...');
+            try {
+                window.open('index.html', '_blank');
+                logToConsole('Main app opened in new tab', 'success');
+            } catch (error) {
+                logToConsole(`Error opening main app: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run basic tests when page loads
+        window.addEventListener('load', function() {
+            logToConsole('Page loaded, running automatic tests...');
+            setTimeout(() => {
+                testScripts();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
