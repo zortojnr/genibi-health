@@ -228,3 +228,4 @@
 [07:38:52.017] Error: Command "npm run build" exited with 1node_modules
 backend/.env
 node_modules
+.vercel

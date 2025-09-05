@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false, // Disable to avoid critters dependency issue
     optimizePackageImports: ['lucide-react', '@heroicons/react'],
   },
   images: {

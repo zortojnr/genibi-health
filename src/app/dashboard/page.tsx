@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
@@ -34,7 +34,7 @@ type DashboardFeature = {
   urgent: boolean;
 };
 
-export default function DashboardPage() {
+function DashboardContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [showChatbot, setShowChatbot] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
@@ -233,6 +233,14 @@ export default function DashboardPage() {
         isDemo={isDemo}
       />
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <DashboardContent />
+    </Suspense>
   );
 }
 
