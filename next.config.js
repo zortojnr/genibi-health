@@ -39,6 +39,13 @@ const nextConfig = {
     if (!dev && !isServer) {
       config.optimization.splitChunks.chunks = 'all';
     }
+
+    // Fix async-local-storage issue
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      'async_hooks': false,
+    };
+
     return config;
   },
 };

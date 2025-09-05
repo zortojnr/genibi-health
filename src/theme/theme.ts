@@ -1,9 +1,6 @@
-import { DefaultTheme } from 'react-native-paper';
-
+// Web-compatible theme without react-native-paper dependency
 export const theme = {
-  ...DefaultTheme,
   colors: {
-    ...DefaultTheme.colors,
     primary: '#4A90E2',      // Calming blue
     secondary: '#7ED321',     // Positive green
     accent: '#F5A623',        // Warm orange
@@ -23,7 +20,6 @@ export const theme = {
     wellness: '#F1F8E9',     // Light green for wellness sections
   },
   fonts: {
-    ...DefaultTheme.fonts,
     regular: {
       fontFamily: 'System',
       fontWeight: '400' as const,

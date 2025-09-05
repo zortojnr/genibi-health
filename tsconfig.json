@@ -40,6 +40,12 @@
     "node_modules",
     ".next",
     "out",
-    "dist"
+    "dist",
+    "backend",
+    "mobile",
+    "genibi-health-app-deploy",
+    "health-app",
+    "web",
+    "src/screens"
   ]
 }

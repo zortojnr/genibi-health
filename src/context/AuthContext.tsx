@@ -1,6 +1,25 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from '../services/firebase';
+
+// Web-compatible AsyncStorage replacement
+const AsyncStorage = {
+  async getItem(key: string): Promise<string | null> {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(key);
+    }
+    return null;
+  },
+  async setItem(key: string, value: string): Promise<void> {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, value);
+    }
+  },
+  async removeItem(key: string): Promise<void> {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(key);
+    }
+  },
+};
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword,

@@ -1,6 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-paper';
 
 interface Props {
   children: ReactNode;
@@ -32,69 +30,30 @@ class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <View style={styles.container}>
-          <View style={styles.content}>
-            <Text style={styles.title}>Oops! Something went wrong</Text>
-            <Text style={styles.message}>
+        <div className="flex min-h-screen bg-blue-500 justify-center items-center p-5">
+          <div className="bg-white p-5 rounded-lg shadow-lg max-w-md w-full text-center">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Oops! Something went wrong</h2>
+            <p className="text-gray-600 mb-4">
               The app encountered an unexpected error. Please try restarting the app.
-            </Text>
-            {__DEV__ && this.state.error && (
-              <Text style={styles.errorText}>
+            </p>
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <pre className="text-red-500 text-sm bg-gray-100 p-2 rounded mb-4 overflow-auto">
                 {this.state.error.toString()}
-              </Text>
+              </pre>
             )}
-            <Button
-              mode="contained"
-              onPress={this.handleRestart}
-              style={styles.button}
+            <button
+              onClick={this.handleRestart}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition-colors"
             >
               Restart App
-            </Button>
-          </View>
-        </View>
+            </button>
+          </div>
+        </div>
       );
     }
 
     return this.props.children;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#4A90E2',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  content: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    maxWidth: 300,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  message: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#666',
-  },
-  errorText: {
-    fontSize: 12,
-    color: 'red',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  button: {
-    marginTop: 10,
-  },
-});
 
 export default ErrorBoundary;

@@ -7,7 +7,7 @@ import {
   Heart, 
   Activity, 
   Phone, 
-  Pills, 
+  Pill,
   Calendar, 
   Smile, 
   FileText, 
@@ -23,6 +23,16 @@ import Button from '@/components/ui/button';
 import DashboardCard from '@/components/dashboard/dashboard-card';
 import ChatbotModal from '@/components/chatbot/chatbot-modal';
 import FeatureModal from '@/components/dashboard/feature-modal';
+
+// Type definition for dashboard features
+type DashboardFeature = {
+  id: string;
+  title: string;
+  description: string;
+  icon: any;
+  color: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'neutral';
+  urgent: boolean;
+};
 
 export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -226,7 +236,7 @@ export default function DashboardPage() {
   );
 }
 
-const dashboardFeatures = [
+const dashboardFeatures: DashboardFeature[] = [
   {
     id: 'chatbot',
     title: 'AI Health Assistant',
@@ -247,7 +257,7 @@ const dashboardFeatures = [
     id: 'medications',
     title: 'Medications',
     description: 'Manage your prescriptions and reminders',
-    icon: Pills,
+    icon: Pill,
     color: 'secondary',
     urgent: false,
   },

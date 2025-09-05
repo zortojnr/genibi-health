@@ -4,8 +4,20 @@
  */
 
 import { useCallback, useMemo } from 'react';
-import { InteractionManager, Platform } from 'react-native';
 import { PERFORMANCE_CONFIG } from '../config/performance';
+
+// Web-compatible InteractionManager
+const InteractionManager = {
+  runAfterInteractions: (callback: () => void) => {
+    // Use requestAnimationFrame for web
+    requestAnimationFrame(callback);
+  },
+};
+
+// Web platform detection
+const Platform = {
+  OS: 'web' as const,
+};
 
 export const usePerformance = () => {
   // Optimized navigation function
@@ -100,7 +112,7 @@ export const usePerformance = () => {
 
   // Performance monitoring (development only)
   const measurePerformance = useCallback((label: string, fn: () => void) => {
-    if (__DEV__ && PERFORMANCE_CONFIG.environment.enablePerformanceMonitoring) {
+    if (process.env.NODE_ENV === 'development' && PERFORMANCE_CONFIG.environment.enablePerformanceMonitoring) {
       const start = Date.now();
       fn();
       const end = Date.now();
@@ -119,7 +131,7 @@ export const usePerformance = () => {
   const platformOptimizations = useMemo(() => {
     return {
       useNativeDriver: PERFORMANCE_CONFIG.navigation.USE_NATIVE_DRIVER,
-      enableHermes: PERFORMANCE_CONFIG.platform.enableHermes,
+      enableServiceWorker: PERFORMANCE_CONFIG.platform.enableServiceWorker,
       gestureEnabled: PERFORMANCE_CONFIG.navigation.GESTURE_CONFIG.enabled,
     };
   }, []);

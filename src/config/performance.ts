@@ -3,15 +3,19 @@
  * Optimized settings for fast, smooth navigation and transitions
  */
 
-import { Platform } from 'react-native';
+// Web platform detection
+const Platform = {
+  OS: typeof window !== 'undefined' ? 'web' : 'web',
+  select: (options: { web?: any; default?: any }) => options.web || options.default,
+};
 
 // Navigation performance settings
 export const NAVIGATION_CONFIG = {
   // Fast transition durations (in milliseconds)
   TRANSITION_DURATION: {
-    FAST: Platform.OS === 'ios' ? 200 : 150,
-    NORMAL: Platform.OS === 'ios' ? 250 : 200,
-    SLOW: Platform.OS === 'ios' ? 300 : 250,
+    FAST: 200,
+    NORMAL: 250,
+    SLOW: 300,
   },
   
   // Enable native driver for better performance
@@ -40,14 +44,14 @@ export const NAVIGATION_CONFIG = {
         open: {
           animation: 'timing',
           config: {
-            duration: Platform.OS === 'ios' ? 200 : 150,
+            duration: 200,
             useNativeDriver: true,
           },
         },
         close: {
           animation: 'timing',
           config: {
-            duration: Platform.OS === 'ios' ? 150 : 100,
+            duration: 150,
             useNativeDriver: true,
           },
         },
@@ -172,14 +176,14 @@ export const ENV_CONFIG = {
 };
 
 // Export default configuration based on environment
-const isDevelopment = __DEV__;
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 export const PERFORMANCE_CONFIG = {
   navigation: NAVIGATION_CONFIG,
   components: COMPONENT_CONFIG,
   animations: ANIMATION_CONFIG,
   network: NETWORK_CONFIG,
-  platform: PLATFORM_CONFIG[Platform.OS as keyof typeof PLATFORM_CONFIG],
+  platform: PLATFORM_CONFIG.web,
   memory: MEMORY_CONFIG,
   environment: isDevelopment ? ENV_CONFIG.development : ENV_CONFIG.production,
 };

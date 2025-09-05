@@ -1,2 +1,230 @@
-node_modules
+[07:38:11.029] Running build in Washington, D.C., USA (East) – iad1
+[07:38:11.029] Build machine configuration: 2 cores, 8 GB
+[07:38:11.044] Cloning github.com/zortojnr/genibi-health (Branch: blackboxai/deployment-package, Commit: ad0ed69)
+[07:38:11.178] Previous build caches not available
+[07:38:11.338] Cloning completed: 294.000ms
+[07:38:11.787] Running "vercel build"
+[07:38:12.178] Vercel CLI 47.0.5
+[07:38:12.509] Warning: Detected "engines": { "node": ">=18.0.0" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+[07:38:12.528] Installing dependencies...
+[07:38:29.924] npm warn deprecated abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+[07:38:30.191] npm warn deprecated domexception@4.0.0: Use your platform's native DOMException instead
+[07:38:31.113] npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+[07:38:31.808] npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+[07:38:32.868] npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+[07:38:32.890] npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+[07:38:33.525] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[07:38:33.616] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[07:38:33.617] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[07:38:33.619] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[07:38:33.689] npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+[07:38:36.397] npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[07:38:48.223] 
+[07:38:48.223] added 883 packages in 35s
+[07:38:48.223] 
+[07:38:48.223] 186 packages are looking for funding
+[07:38:48.223]   run `npm fund` for details
+[07:38:48.483] Detected Next.js version: 14.2.32
+[07:38:48.493] Running "npm run build"
+[07:38:48.739] 
+[07:38:48.741] > genibi-nt-healthcare-plus@2.0.0 build
+[07:38:48.741] > next build
+[07:38:48.741] 
+[07:38:49.870] Attention: Next.js now collects completely anonymous telemetry regarding usage.
+[07:38:49.871] This information is used to shape Next.js' roadmap and prioritize features.
+[07:38:49.872] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+[07:38:49.872] https://nextjs.org/telemetry
+[07:38:49.872] 
+[07:38:50.126]   ▲ Next.js 14.2.32
+[07:38:50.128]   - Experiments (use with caution):
+[07:38:50.131]     · optimizeCss
+[07:38:50.133] 
+[07:38:50.262]    Creating an optimized production build ...
+[07:38:50.640]    Disabled SWC as replacement for Babel because of custom Babel configuration "babel.config.js" https://nextjs.org/docs/messages/swc-disabled
+[07:38:50.968]    Using external babel configuration from /vercel/path0/babel.config.js
+[07:38:51.957] Failed to compile.
+[07:38:51.958] 
+[07:38:51.958] ./node_modules/next/dist/pages/_app.js
+[07:38:51.959] Error: Cannot find module 'react-native-reanimated/plugin'
+[07:38:51.959] Require stack:
+[07:38:51.959] - /vercel/path0/node_modules/next/dist/compiled/babel/bundle.js
+[07:38:51.959] - /vercel/path0/node_modules/next/dist/compiled/babel/code-frame.js
+[07:38:51.959] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/shared.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/middleware.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/build/webpack-config.js
+[07:38:51.960] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+[07:38:51.961] - /vercel/path0/node_modules/next/dist/build/collect-build-traces.js
+[07:38:51.961] - /vercel/path0/node_modules/next/dist/build/index.js
+[07:38:51.961] - /vercel/path0/node_modules/next/dist/cli/next-build.js
+[07:38:51.961] 
+[07:38:51.961] Make sure that all the Babel plugins and presets you are using
+[07:38:51.961] are defined as dependencies or devDependencies in your package.json
+[07:38:51.962] file. It's possible that the missing plugin is loaded by a preset
+[07:38:51.962] you are using that forgot to add the plugin to its dependencies: you
+[07:38:51.962] can workaround this problem by explicitly adding the missing package
+[07:38:51.962] to your top-level package.json.
+[07:38:51.963] 
+[07:38:51.964]     at Function.<anonymous> (node:internal/modules/cjs/loader:1365:15)
+[07:38:51.964]     at /vercel/path0/node_modules/next/dist/server/require-hook.js:55:36
+[07:38:51.964]     at resolve (node:internal/modules/helpers:145:19)
+[07:38:51.964]     at tryRequireResolve (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111154)
+[07:38:51.965]     at resolveStandardizedNameForRequire (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111506)
+[07:38:51.965]     at resolveStandardizedName (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111912)
+[07:38:51.965]     at loadPlugin (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:109262)
+[07:38:51.965]     at loadPlugin.next (<anonymous>)
+[07:38:51.965]     at createDescriptor (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:94699)
+[07:38:51.965]     at createDescriptor.next (<anonymous>)
+[07:38:51.965] 
+[07:38:51.966] ./node_modules/next/dist/pages/_document.js
+[07:38:51.966] Error: Cannot find module 'react-native-reanimated/plugin'
+[07:38:51.966] Require stack:
+[07:38:51.966] - /vercel/path0/node_modules/next/dist/compiled/babel/bundle.js
+[07:38:51.966] - /vercel/path0/node_modules/next/dist/compiled/babel/code-frame.js
+[07:38:51.966] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/shared.js
+[07:38:51.966] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/middleware.js
+[07:38:51.967] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js
+[07:38:51.967] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js
+[07:38:51.969] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js
+[07:38:51.969] - /vercel/path0/node_modules/next/dist/build/webpack-config.js
+[07:38:51.969] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+[07:38:51.969] - /vercel/path0/node_modules/next/dist/build/collect-build-traces.js
+[07:38:51.970] - /vercel/path0/node_modules/next/dist/build/index.js
+[07:38:51.970] - /vercel/path0/node_modules/next/dist/cli/next-build.js
+[07:38:51.970] 
+[07:38:51.970] Make sure that all the Babel plugins and presets you are using
+[07:38:51.970] are defined as dependencies or devDependencies in your package.json
+[07:38:51.970] file. It's possible that the missing plugin is loaded by a preset
+[07:38:51.970] you are using that forgot to add the plugin to its dependencies: you
+[07:38:51.975] can workaround this problem by explicitly adding the missing package
+[07:38:51.975] to your top-level package.json.
+[07:38:51.976] 
+[07:38:51.976]     at Function.<anonymous> (node:internal/modules/cjs/loader:1365:15)
+[07:38:51.976]     at /vercel/path0/node_modules/next/dist/server/require-hook.js:55:36
+[07:38:51.976]     at resolve (node:internal/modules/helpers:145:19)
+[07:38:51.977]     at tryRequireResolve (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111154)
+[07:38:51.977]     at resolveStandardizedNameForRequire (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111506)
+[07:38:51.977]     at resolveStandardizedName (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111912)
+[07:38:51.977]     at loadPlugin (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:109262)
+[07:38:51.977]     at loadPlugin.next (<anonymous>)
+[07:38:51.978]     at createDescriptor (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:94699)
+[07:38:51.978]     at createDescriptor.next (<anonymous>)
+[07:38:51.978] 
+[07:38:51.978] ./node_modules/next/dist/pages/_error.js
+[07:38:51.978] Error: Cannot find module 'react-native-reanimated/plugin'
+[07:38:51.979] Require stack:
+[07:38:51.979] - /vercel/path0/node_modules/next/dist/compiled/babel/bundle.js
+[07:38:51.979] - /vercel/path0/node_modules/next/dist/compiled/babel/code-frame.js
+[07:38:51.979] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/shared.js
+[07:38:51.979] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/middleware.js
+[07:38:51.980] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js
+[07:38:51.980] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js
+[07:38:51.981] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js
+[07:38:51.982] - /vercel/path0/node_modules/next/dist/build/webpack-config.js
+[07:38:51.982] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+[07:38:51.982] - /vercel/path0/node_modules/next/dist/build/collect-build-traces.js
+[07:38:51.982] - /vercel/path0/node_modules/next/dist/build/index.js
+[07:38:51.983] - /vercel/path0/node_modules/next/dist/cli/next-build.js
+[07:38:51.983] 
+[07:38:51.983] Make sure that all the Babel plugins and presets you are using
+[07:38:51.983] are defined as dependencies or devDependencies in your package.json
+[07:38:51.983] file. It's possible that the missing plugin is loaded by a preset
+[07:38:51.984] you are using that forgot to add the plugin to its dependencies: you
+[07:38:51.984] can workaround this problem by explicitly adding the missing package
+[07:38:51.984] to your top-level package.json.
+[07:38:51.984] 
+[07:38:51.984]     at Function.<anonymous> (node:internal/modules/cjs/loader:1365:15)
+[07:38:51.985]     at /vercel/path0/node_modules/next/dist/server/require-hook.js:55:36
+[07:38:51.985]     at resolve (node:internal/modules/helpers:145:19)
+[07:38:51.985]     at tryRequireResolve (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111154)
+[07:38:51.985]     at resolveStandardizedNameForRequire (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111506)
+[07:38:51.986]     at resolveStandardizedName (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111912)
+[07:38:51.986]     at loadPlugin (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:109262)
+[07:38:51.986]     at loadPlugin.next (<anonymous>)
+[07:38:51.986]     at createDescriptor (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:94699)
+[07:38:51.986]     at createDescriptor.next (<anonymous>)
+[07:38:51.987] 
+[07:38:51.987] Import trace for requested module:
+[07:38:51.987] ./node_modules/next/dist/pages/_error.js
+[07:38:51.987] 
+[07:38:51.987] ./node_modules/next/dist/client/components/error-boundary.js
+[07:38:51.988] Error: Cannot find module 'react-native-reanimated/plugin'
+[07:38:51.988] Require stack:
+[07:38:51.988] - /vercel/path0/node_modules/next/dist/compiled/babel/bundle.js
+[07:38:51.988] - /vercel/path0/node_modules/next/dist/compiled/babel/code-frame.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/shared.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/middleware.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js
+[07:38:51.989] - /vercel/path0/node_modules/next/dist/build/webpack-config.js
+[07:38:51.990] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+[07:38:51.991] - /vercel/path0/node_modules/next/dist/build/collect-build-traces.js
+[07:38:51.991] - /vercel/path0/node_modules/next/dist/build/index.js
+[07:38:51.992] - /vercel/path0/node_modules/next/dist/cli/next-build.js
+[07:38:51.992] 
+[07:38:51.992] Make sure that all the Babel plugins and presets you are using
+[07:38:51.992] are defined as dependencies or devDependencies in your package.json
+[07:38:51.992] file. It's possible that the missing plugin is loaded by a preset
+[07:38:51.992] you are using that forgot to add the plugin to its dependencies: you
+[07:38:51.992] can workaround this problem by explicitly adding the missing package
+[07:38:51.992] to your top-level package.json.
+[07:38:51.993] 
+[07:38:51.993]     at Function.<anonymous> (node:internal/modules/cjs/loader:1365:15)
+[07:38:51.993]     at /vercel/path0/node_modules/next/dist/server/require-hook.js:55:36
+[07:38:51.993]     at resolve (node:internal/modules/helpers:145:19)
+[07:38:51.993]     at tryRequireResolve (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111154)
+[07:38:51.993]     at resolveStandardizedNameForRequire (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111506)
+[07:38:51.993]     at resolveStandardizedName (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111912)
+[07:38:51.993]     at loadPlugin (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:109262)
+[07:38:51.993]     at loadPlugin.next (<anonymous>)
+[07:38:51.994]     at createDescriptor (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:94699)
+[07:38:51.994]     at createDescriptor.next (<anonymous>)
+[07:38:51.994] 
+[07:38:51.994] Import trace for requested module:
+[07:38:51.994] ./node_modules/next/dist/client/components/error-boundary.js
+[07:38:51.994] 
+[07:38:51.994] ./node_modules/next/dist/client/components/not-found-error.js
+[07:38:51.994] Error: Cannot find module 'react-native-reanimated/plugin'
+[07:38:51.995] Require stack:
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/compiled/babel/bundle.js
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/compiled/babel/code-frame.js
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/shared.js
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/client/components/react-dev-overlay/server/middleware.js
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/parseNotFoundError.js
+[07:38:51.995] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/webpackModuleError.js
+[07:38:51.996] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/wellknown-errors-plugin/index.js
+[07:38:51.996] - /vercel/path0/node_modules/next/dist/build/webpack-config.js
+[07:38:51.996] - /vercel/path0/node_modules/next/dist/build/webpack/plugins/next-trace-entrypoints-plugin.js
+[07:38:51.996] - /vercel/path0/node_modules/next/dist/build/collect-build-traces.js
+[07:38:51.996] - /vercel/path0/node_modules/next/dist/build/index.js
+[07:38:51.997] - /vercel/path0/node_modules/next/dist/cli/next-build.js
+[07:38:51.997] 
+[07:38:51.997] Make sure that all the Babel plugins and presets you are using
+[07:38:51.997] are defined as dependencies or devDependencies in your package.json
+[07:38:51.997] file. It's possible that the missing plugin is loaded by a preset
+[07:38:51.998] you are using that forgot to add the plugin to its dependencies: you
+[07:38:51.998] can workaround this problem by explicitly adding the missing package
+[07:38:51.998] to your top-level package.json.
+[07:38:51.998] 
+[07:38:51.998]     at Function.<anonymous> (node:internal/modules/cjs/loader:1365:15)
+[07:38:51.999]     at /vercel/path0/node_modules/next/dist/server/require-hook.js:55:36
+[07:38:51.999]     at resolve (node:internal/modules/helpers:145:19)
+[07:38:51.999]     at tryRequireResolve (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111154)
+[07:38:51.999]     at resolveStandardizedNameForRequire (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111506)
+[07:38:52.000]     at resolveStandardizedName (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:111912)
+[07:38:52.000]     at loadPlugin (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:109262)
+[07:38:52.000]     at loadPlugin.next (<anonymous>)
+[07:38:52.000]     at createDescriptor (/vercel/path0/node_modules/next/dist/compiled/babel/bundle.js:1:94699)
+[07:38:52.000]     at createDescriptor.next (<anonymous>)
+[07:38:52.001] 
+[07:38:52.001] Import trace for requested module:
+[07:38:52.001] ./node_modules/next/dist/client/components/not-found-error.js
+[07:38:52.001] 
+[07:38:52.003] 
+[07:38:52.003] > Build failed because of webpack errors
+[07:38:52.017] Error: Command "npm run build" exited with 1node_modules
 backend/.env
+node_modules
