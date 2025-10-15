@@ -4,10 +4,17 @@ let currentFeature = null;
 let currentChatSession = null;
 let dashboardData = null;
 let selectedMood = null;
-let currentUser = null;
+var currentUser = null;
+
+// Lightweight, standardized logger for consistent entries
+const logger = {
+    info: (msg, data) => console.log(`ℹ️ [Genibi] ${msg}`, data ?? ''),
+    warn: (msg, data) => console.warn(`⚠️ [Genibi] ${msg}`, data ?? ''),
+    error: (msg, data) => console.error(`❌ [Genibi] ${msg}`, data ?? ''),
+};
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Initializing Genibi Health App...');
+    logger.info('Initializing Genibi Health App');
 
     // Wait a bit for auth to initialize first
     setTimeout(() => {
@@ -18,23 +25,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function initializeMainApp() {
     try {
-        console.log('📊 Setting up dashboard...');
+        logger.info('Setting up dashboard');
         // Initialize dashboard features
         await initializeDashboard();
 
-        console.log('🧭 Setting up navigation...');
+        logger.info('Setting up navigation');
         // Setup navigation
         setupNavigation();
 
-        console.log('📞 Setting up helpline...');
+        logger.info('Setting up helpline');
         // Setup helpline functionality
         setupHelpline();
 
-        console.log('📱 Setting up responsive features...');
+        logger.info('Setting up responsive features');
         // Initialize responsive features
         setupResponsiveFeatures();
 
-        console.log('🤖 Setting up chatbot...');
+        logger.info('Setting up chatbot');
         // Initialize chatbot
         initializeChatbot();
 
@@ -55,12 +62,16 @@ function setupMainAppEventListeners() {
 
         // Dashboard card interactions
         setupDashboardCards();
+        setupAssistantInline();
 
         // Navigation menu interactions
         setupNavigationMenu();
 
         // Mobile menu toggle
         setupMobileMenu();
+
+        // Header search interactions
+        setupHeaderSearch();
 
         // Helpline interactions
         setupHelplineInteractions();
@@ -71,6 +82,42 @@ function setupMainAppEventListeners() {
         console.log('✅ Event listeners setup complete');
     } catch (error) {
         console.error('❌ Error setting up event listeners:', error);
+    }
+}
+
+// Header search: filter dashboard metrics and cards
+function setupHeaderSearch() {
+    try {
+        const searchInput = document.querySelector('.header-search input[type="search"]');
+        if (!searchInput) return;
+
+        const selectors = ['.metric-card', '.health-card'];
+        const getItems = () => selectors.flatMap(sel => Array.from(document.querySelectorAll(sel)));
+        const normalize = (s) => (s || '').toLowerCase();
+
+        const filterItems = (query) => {
+            const q = normalize(query);
+            const items = getItems();
+            items.forEach(el => {
+                const text = normalize(el.innerText);
+                const match = !q || text.includes(q);
+                el.style.display = match ? '' : 'none';
+            });
+        };
+
+        // Live filtering
+        searchInput.addEventListener('input', (e) => filterItems(e.target.value));
+
+        // Escape clears search
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                filterItems('');
+                searchInput.blur();
+            }
+        });
+    } catch (error) {
+        console.error('❌ Error setting up header search:', error);
     }
 }
 
@@ -187,38 +234,98 @@ function updateDashboardUI() {
 // Update dashboard statistics
 function updateDashboardStats(stats) {
     // This would update various stat displays in the dashboard
-    console.log('Dashboard stats:', stats);
+    logger.info('Dashboard stats updated', stats);
 }
 
 // Update recent activity display
 function updateRecentActivity(activities) {
     // This would update the recent activity section
-    console.log('Recent activities:', activities);
+    logger.info('Recent activity loaded', { count: Array.isArray(activities) ? activities.length : 0 });
 }
 
 function setupDashboardCards() {
     // Vital Signs Card
-    const vitalSignsBtn = document.querySelector('.health-card:nth-child(1) .card-btn');
+    const vitalSignsBtn = document.querySelector('.vital-card .card-btn');
     if (vitalSignsBtn) {
-        vitalSignsBtn.addEventListener('click', function() {
+        vitalSignsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             showVitalSignsModal();
         });
     }
-    
+
     // Appointments Card
-    const appointmentsBtn = document.querySelector('.health-card:nth-child(2) .card-btn');
+    const appointmentsBtn = document.querySelector('.appointments-card .card-btn');
     if (appointmentsBtn) {
-        appointmentsBtn.addEventListener('click', function() {
+        appointmentsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             showAppointmentsModal();
         });
     }
-    
+
     // Medications Card
-    const medicationsBtn = document.querySelector('.health-card:nth-child(3) .card-btn');
+    const medicationsBtn = document.querySelector('.medications-card .card-btn');
     if (medicationsBtn) {
-        medicationsBtn.addEventListener('click', function() {
+        medicationsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
             showMedicationsModal();
         });
+    }
+}
+
+// Inline assistant: collapsible chat on the AI card
+function setupAssistantInline() {
+    try {
+        const assistantCard = document.querySelector('.ai-assistant-card');
+        if (!assistantCard) return;
+
+        const toggleBtn = assistantCard.querySelector('.assistant-toggle');
+        const inlinePanel = assistantCard.querySelector('.assistant-inline');
+        const inputEl = assistantCard.querySelector('#assistant-inline-input');
+        const sendBtn = assistantCard.querySelector('.send-inline-btn');
+        const messagesEl = assistantCard.querySelector('#assistant-inline-messages');
+
+        if (!toggleBtn || !inlinePanel) return;
+
+        const toggleInline = () => {
+            const expanded = inlinePanel.classList.toggle('expanded');
+            toggleBtn.setAttribute('aria-expanded', String(expanded));
+            inlinePanel.setAttribute('aria-hidden', String(!expanded));
+            if (expanded) {
+                setTimeout(() => inputEl && inputEl.focus(), 120);
+            }
+            logger.info('Assistant inline panel toggled', { expanded });
+        };
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleInline();
+        });
+
+        const sendInline = () => {
+            const text = (inputEl?.value || '').trim();
+            if (!text) return;
+            const item = document.createElement('div');
+            item.className = 'assistant-inline-message';
+            item.textContent = text;
+            messagesEl?.appendChild(item);
+            if (inputEl) inputEl.value = '';
+            if (messagesEl) messagesEl.scrollTop = messagesEl.scrollHeight;
+            logger.info('Assistant inline message sent');
+        };
+
+        sendBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sendInline();
+        });
+
+        inputEl?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendInline();
+            }
+        });
+    } catch (error) {
+        console.error('❌ Error setting up assistant inline:', error);
     }
 }
 
@@ -286,6 +393,18 @@ function setupMobileMenu() {
             navToggle.addEventListener('click', function() {
                 navMenu.classList.toggle('mobile-active');
                 navToggle.classList.toggle('active');
+
+                // Animate hamburger menu
+                const spans = this.querySelectorAll('span');
+                if (navMenu.classList.contains('mobile-active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
             });
 
             console.log('✅ Mobile menu setup complete');
@@ -294,21 +413,6 @@ function setupMobileMenu() {
         }
     } catch (error) {
         console.error('❌ Error setting up mobile menu:', error);
-    }
-}
-            
-            // Animate hamburger menu
-            const spans = this.querySelectorAll('span');
-            if (navMenu.classList.contains('mobile-active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
-        });
     }
 }
 
@@ -1784,7 +1888,7 @@ function selectMood(mood, emoji, rating) {
 }
 
 // Function to save mood entry
-function saveMoodEntry() {
+async function saveMoodEntry() {
     if (!selectedMood) {
         showNotification('Please select a mood first', 'warning');
         return;

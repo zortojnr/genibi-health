@@ -104,47 +104,52 @@ button, input, .btn, .card, .auth-container, .main-app, .loading-screen {
 }
 
 :root {
-    /* Updated Health-focused color palette */
-    --primary-teal: #009688;
-    --secondary-green: #4CAF50;
-    --accent-blue: #2196F3;
-    --background-mint: #F5FAF9;
-    --text-dark-gray: #333333;
+    /* Bright health + wellness + technology palette */
+    --primary-teal: #00B3A4;         /* Caring teal (brighter) */
+    --accent-blue: #2F80FF;          /* Tech azure (electric) */
+    --secondary-green: #10B981;      /* Supportive success state */
+    --background-mint: #F5FAFF;      /* Softer, brighter backdrop */
+    --text-dark-gray: #0E1B2E;       /* Deep slate for body text */
+
+    /* Surfaces and outlines */
+    --surface: #FFFFFF;
+    --surface-container: #F2F6FF;    /* Brighter card surface */
+    --surface-container-low: #F7FAFF;/* Ultra-light container */
+    --outline: #D7E3EC;              /* Softer outline */
 
     /* Map to existing variables for compatibility */
     --primary-green: var(--primary-teal);
     --primary-blue: var(--accent-blue);
-    --secondary-green: var(--secondary-green);
-    --light-green: #E8F8F5;
-    --light-blue: #EBF5FB;
+    --light-green: #E9FFF9;
+    --light-blue: #EEF5FF;
     --soft-white: var(--background-mint);
     --pure-white: #FFFFFF;
     --text-dark: var(--text-dark-gray);
-    --text-light: #7F8C8D;
-    --border-light: #E8F4FD;
-    --shadow-light: rgba(33, 150, 243, 0.1);
-    --shadow-medium: rgba(33, 150, 243, 0.2);
-    --emergency-red: #E74C3C;
+    --text-light: #4B5D6E;           /* Less dim muted text */
+    --border-light: #E6EEF7;
+    --shadow-light: rgba(47, 128, 255, 0.08);
+    --shadow-medium: rgba(47, 128, 255, 0.18);
+    --emergency-red: #EF4444;
     --success-green: var(--secondary-green);
-    --warning-orange: #F39C12;
-    
+    --warning-orange: #F59E0B;
+
     /* Typography */
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Inter', sans-serif;
-    
+
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
-    
+
     /* Border radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 20px;
-    
+
     /* Ultra-Fast Transitions - Optimized for instant feel */
     --transition-instant: 0.05s ease-out;
     --transition-fast: 0.08s ease-out;
@@ -249,7 +254,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md);
-    background: var(--background-mint);
+    background: var(--surface-container-low);
     position: relative;
     transition: opacity var(--transition-instant), visibility var(--transition-instant);
     will-change: opacity, visibility;
@@ -282,10 +287,10 @@ body {
 }
 
 .auth-card {
-    background: var(--pure-white);
+    background: var(--surface);
     border-radius: var(--radius-lg);
     padding: 2rem;
-    box-shadow: 0 15px 40px var(--shadow-medium);
+    box-shadow: 0 12px 28px var(--shadow-light);
     border: 1px solid var(--border-light);
     width: 100%;
     box-sizing: border-box;
@@ -314,6 +319,7 @@ body {
     font-size: 2rem;
     color: var(--primary-green);
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px rgba(0, 167, 146, 0.18));
 }
 
 .logo span {
@@ -426,6 +432,41 @@ body {
     font-size: 14px;
 }
 
+/* Auth input base styles (email, password, text) */
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"],
+.auth-form input[type="tel"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--soft-white);
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    min-height: 44px;
+    box-sizing: border-box;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.auth-form input::placeholder {
+    color: var(--text-light);
+    opacity: 0.85;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: var(--pure-white);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Password input wrapper to position toggle correctly */
+.password-input {
+    position: relative;
+}
+
 .password-strength {
     margin-top: var(--spacing-xs);
 }
@@ -532,15 +573,100 @@ body {
     box-sizing: border-box;
 }
 
+.form-alert {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--border-light);
+    background: #fff7f7;
+    color: #c0392b;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.form-alert.error {
+    border-left-color: var(--emergency-red);
+    background: #fff3f2;
+    color: #b00020;
+}
+
+.form-alert.success {
+    border-left-color: var(--success-green);
+    background: #f2fff6;
+    color: #1b5e20;
+}
+
+.form-alert.info {
+    border-left-color: var(--primary-blue);
+    background: #eef6ff;
+    color: #1e3a8a;
+}
+
+.input-error {
+    border-color: var(--emergency-red) !important;
+    background: #fff5f5 !important;
+}
+
+.input-error:focus {
+    box-shadow: 0 0 0 3px rgba(224, 36, 36, 0.2) !important;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 1.25rem 0;
+    position: relative;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-light);
+    z-index: 0;
+}
+
+.auth-divider span {
+    background: var(--surface);
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+}
+
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-teal) 100%);
     color: var(--pure-white);
-    box-shadow: 0 4px 15px var(--shadow-light);
+    box-shadow: 0 6px 18px var(--shadow-light);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--shadow-medium);
+    box-shadow: 0 10px 28px var(--shadow-medium);
+}
+
+/* Tonal & Outline buttons for Gemini design */
+.btn-tonal {
+    background: var(--surface-container);
+    color: var(--primary-blue);
+    border: 1px solid var(--outline);
+}
+.btn-tonal:hover {
+    background: var(--light-blue);
+}
+.btn-outline {
+    background: transparent;
+    color: var(--primary-blue);
+    border: 1.5px solid var(--outline);
+}
+.btn-outline:hover {
+    background: var(--surface-container-low);
 }
 
 .btn-google {
@@ -746,6 +872,7 @@ body {
     font-weight: 700;
     color: var(--primary-blue);
     line-height: 1.2;
+    text-decoration: none;
 }
 
 .nav-brand i {
@@ -864,6 +991,22 @@ body {
     padding: var(--spacing-xl) 0;
 }
 
+/* Post-login dashboard layout: organize header, metrics, actions, and cards */
+.dashboard {
+    display: grid;
+    row-gap: var(--spacing-xl);
+}
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+.dashboard-header h1 {
+    margin: 0;
+    color: var(--text-dark);
+}
+
 .welcome-section {
     text-align: center;
     margin-bottom: var(--spacing-xl);
@@ -892,7 +1035,7 @@ body {
 }
 
 .health-card {
-    background: var(--pure-white);
+    background: var(--surface);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     box-shadow: 0 10px 30px var(--shadow-light);
@@ -909,7 +1052,7 @@ body {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-teal) 100%);
 }
 
 .health-card:hover {
@@ -920,7 +1063,7 @@ body {
 .card-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+    background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-teal) 100%);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
@@ -1152,7 +1295,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--light-blue);
+    background: linear-gradient(180deg, var(--surface-container-low), var(--surface));
 }
 
 .modal-header h3 {
@@ -1272,6 +1415,70 @@ body {
     background: var(--light-green);
     color: var(--success-green);
 }
+
+/* New: Gemini Dashboard Metrics */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+.metric-card {
+    background: var(--surface);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: 0 8px 20px var(--shadow-light);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--primary-teal));
+    color: var(--pure-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px var(--shadow-light);
+}
+.metric-info h4 { font-size: 0.9rem; color: var(--text-light); margin: 0; }
+.metric-info .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--primary-blue); }
+.metric-info .metric-sub { font-size: 0.8rem; color: var(--text-light); }
+
+/* New: Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+.quick-actions .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    background: var(--surface-container);
+    color: var(--text-dark);
+    border: 1px solid var(--outline);
+}
+.quick-actions .action-btn:hover { background: var(--light-blue); }
+
+/* New: Header Search */
+.header-search {
+    position: relative;
+    display: none;
+}
+.header-search input {
+    padding: 10px 12px 10px 36px;
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+}
+.header-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-light); }
 
 /* Appointments Styles */
 .appointments-list {
@@ -2975,3 +3182,46 @@ body {
     font-size: 0.9rem;
     font-style: italic;
 }
+/* === Healthcare Solid Palette Overrides (no gradients) === */
+.btn-primary { background: var(--primary-blue) !important; }
+.health-card::before { background: var(--primary-blue) !important; }
+.card-icon { background: var(--primary-teal) !important; }
+.metric-icon { background: var(--primary-teal) !important; }
+.modal-header { background: var(--surface) !important; }
+/* === End Solid Palette Overrides === */
+/* === Responsive Logo Sizing (Fluid across viewports) === */
+.nav-brand { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
+.nav-brand i { font-size: clamp(1.3rem, 2.4vw, 1.8rem); }
+.logo { font-size: clamp(1.3rem, 3vw, 1.6rem); }
+.logo i { font-size: clamp(1.5rem, 3.2vw, 2rem); }
+/* === End Responsive Logo Sizing === */
+/* === Responsive Dashboard Cards and Assistant Inline Panel === */
+.health-card { padding: clamp(16px, 2.5vw, 24px); }
+.card-icon { width: clamp(50px, 5vw, 60px); height: clamp(50px, 5vw, 60px); font-size: clamp(1.3rem, 2.2vw, 1.5rem); }
+
+.assistant-inline {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    overflow: hidden;
+    transition: max-height 300ms ease, opacity 200ms ease, transform 200ms ease;
+    border-top: 1px solid var(--border-light);
+    margin-top: var(--spacing-sm);
+}
+.assistant-inline.expanded {
+    max-height: 320px;
+    opacity: 1;
+    transform: translateY(0);
+}
+.assistant-inline-messages {
+    min-height: 80px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: var(--spacing-sm) 0;
+}
+.assistant-inline-message { color: var(--text-dark); padding: 6px 0; }
+.assistant-inline-input { display: grid; grid-template-columns: 1fr auto auto; gap: var(--spacing-sm); align-items: center; }
+.assistant-inline-input input { border: 1px solid var(--outline); border-radius: var(--radius-md); padding: 10px 12px; }
+.send-inline-btn { background: var(--primary-teal); color: var(--pure-white); border: none; border-radius: var(--radius-md); padding: 10px 12px; }
+.open-full-btn { background: var(--surface); color: var(--primary-blue); border: 1px solid var(--outline); border-radius: var(--radius-md); padding: 10px 12px; }
+/* === End Responsive Dashboard Cards and Assistant Inline Panel === */
